@@ -2,7 +2,7 @@
 
 import { CardWrapper } from "./card-wrapper";
 import * as z from "zod";
-import { LoginSchema } from "@/schemas";
+import { SignupSchema } from "@/schemas";
 import { Input } from "@/components/ui/input";
 import { useState, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
@@ -23,7 +23,7 @@ import { login } from "@/actions/login";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
 
-export const LoginForm = () => {
+export const SignupForm = () => {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
   const urlError =
@@ -36,15 +36,16 @@ export const LoginForm = () => {
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<z.infer<typeof SignupSchema>>({
+    resolver: zodResolver(SignupSchema),
     defaultValues: {
       email: "",
       password: "",
+      name: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+  const onSubmit = (values: z.infer<typeof SignupSchema>) => {
     setError("")
     setSuccess("")
     
@@ -60,13 +61,31 @@ export const LoginForm = () => {
   return (
     <CardWrapper
       headerLabel="Welcome Back"
-      backButtonHref="/auth/signup"
-      backButtonLabel="Dont have an account?"
+      backButtonHref="/auth/login"
+      backButtonLabel="Already have an account?"
       showSocial
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
+          <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      placeholder="John Doe"
+                      type="email"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="email"
@@ -115,7 +134,7 @@ export const LoginForm = () => {
           <FormError message={error || urlError} />
           <FormSuccess message={success} />
           <Button className="w-full" type="submit" disabled={isPending}>
-            Log In
+            Create an account
           </Button>
         </form>
       </Form>
