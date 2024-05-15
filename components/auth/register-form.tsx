@@ -19,7 +19,7 @@ import {
 import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { login } from "@/actions/login";
+import { register } from "@/actions/register";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
 
@@ -50,7 +50,7 @@ export const SignupForm = () => {
     setSuccess("")
     
     startTransition(() => {
-      login(values)
+      register(values)
       .then((data) => {
         setError(data.error);
         setSuccess(data.success);
