@@ -2,7 +2,7 @@ import { Poppins } from "next/font/google";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-// import { LoginButton } from "@/components/auth/login-button";
+import { LoginButton } from "@/components/auth/login-button";
 
 const font = Poppins({
   subsets: ["latin"],
@@ -23,11 +23,11 @@ export default function Home() {
           A simple authentication service
         </p>
         <div>
-          {/* <LoginButton  asChild> */}
+          <LoginButton mode="redirect"  asChild>
             <Button variant="secondary" size="lg">
               Sign in
             </Button>
-          {/* </LoginButton> */}
+          </LoginButton>
         </div>
       </div>
     </main>
