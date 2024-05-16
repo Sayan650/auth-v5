@@ -10,7 +10,7 @@ export const LoginSchema = z.object({
     // code: z.optional(z.string()),
   });
 
-  export const SignupSchema = z.object({
+  export const RegisterSchema = z.object({
     email: z.string().email({
       message: "Email is required",
     }),

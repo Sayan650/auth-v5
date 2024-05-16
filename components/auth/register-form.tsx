@@ -2,7 +2,7 @@
 
 import { CardWrapper } from "./card-wrapper";
 import * as z from "zod";
-import { SignupSchema } from "@/schemas";
+import { RegisterSchema } from "@/schemas";
 import { Input } from "@/components/ui/input";
 import { useState, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
@@ -36,8 +36,8 @@ export const SignupForm = () => {
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof SignupSchema>>({
-    resolver: zodResolver(SignupSchema),
+  const form = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -45,9 +45,10 @@ export const SignupForm = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof SignupSchema>) => {
+  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     setError("")
     setSuccess("")
+    console.log("hit")
     
     startTransition(() => {
       register(values)
@@ -79,7 +80,7 @@ export const SignupForm = () => {
                       {...field}
                       disabled={isPending}
                       placeholder="John Doe"
-                      type="email"
+                      type="text"
                     />
                   </FormControl>
                   <FormMessage />
